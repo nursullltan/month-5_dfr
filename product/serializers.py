@@ -37,8 +37,8 @@ class CategoryListSerializer(serializers.ModelSerializer):
         model = Category
         fields = '__all__'
 
-        def get_product_count(self, category):
-            return category.product_set.count()
+    def get_product_count(self, category):
+        return category.product_set.count()
 
 class ProductReviewsSerializer(serializers.ModelSerializer):
     reviews = ReviewListSerializer(many=True, read_only=True)
