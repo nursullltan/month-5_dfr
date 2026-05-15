@@ -3,7 +3,10 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Product, Review, Category
-from .serializers import ProductListSerializer, ReviewListSerializer, CategoryListSerializer, CategoryDetailSerializer,ReviewDetailSerializer, ProductDetailSerializer, ProductReviewsSerializer
+from .serializers import (ProductListSerializer, ReviewListSerializer,
+                           CategoryListSerializer, CategoryDetailSerializer,ReviewDetailSerializer, 
+                           ProductDetailSerializer, ProductReviewsSerializer, CategoryValidateSerializer,
+                            ProductValidateSerializer, ReviewValidateSerializer )
 
 
 @api_view(['GET', 'PUT', 'DELET'])
@@ -33,6 +36,8 @@ def category_list_api_view(request):
         return Response(data=data)
     
     elif request.method == 'POST':
+        serializer = CategoryValidateSerializer(data=request.data)
+        serializer.is_valid
         name = request.data.get('name')
 
     category = Category.objects.create(
@@ -65,7 +70,7 @@ def product_detail_api_view(request, id):
         return Response(status=status.HTTP_201_CREATED,
                     data=ReviewListSerializer(product))
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def product_list_api_view(request):
     if request.method == 'GET':
         products = Product.objects.all()
@@ -73,6 +78,8 @@ def product_list_api_view(request):
         return Response(data=data)
     
     elif request.method == 'POST':
+        serializer = ProductReviewsSerializer(data=request.data)
+        serializer.is_valid
         title = request.data.get('title')
         description = request.data.get('description')
         price = request.data.get('price')
@@ -128,6 +135,8 @@ def review_list_api_view(request):
         return Response(data=data, status=status.HTTP_200_OK)
       
     elif request.method == "POST":
+        serializer = ReviewValidateSerializer(data=request.data)
+        serializer.is_valid
         text = request.data.get('text')
         product_id = request.data.get('product_id')
         stars = request.data.get('stars')

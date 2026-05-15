@@ -53,3 +53,17 @@ class ProductReviewsSerializer(serializers.ModelSerializer):
         if reviews.exists():
             return sum([rev.stars for rev in reviews]) / reviews.count()
         return 0
+    
+class CategoryValidateSerializer(serializers.Serializer):
+    name = serializers.CharField()
+
+class ProductValidateSerializer(serializers.Serializer):
+    title = serializers.CharField()
+    description = serializers.CharField()
+    price = serializers.IntegerField()
+    category_id = serializers.IntegerField()
+
+class ReviewValidateSerializer(serializers.Serializer):
+    text = serializers.CharField()
+    product_id = serializers.IntegerField()
+    stars = serializers.IntegerField()
