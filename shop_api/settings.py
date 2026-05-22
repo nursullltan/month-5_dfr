@@ -9,9 +9,9 @@ https://docs.djangoproject.com/en/6.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
-
+import os
 from pathlib import Path
-
+import environ
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,10 +20,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-g^02s%a1l*1r7!wa&8*+q%$0n6^6l)p)f9%evzsq(w4t-0x#!j'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True if os.environ.get('BEBUG') == 'on' else False
 
 ALLOWED_HOSTS = []
 
@@ -81,11 +81,11 @@ WSGI_APPLICATION = 'shop_api.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'shop_api', 
-        'USER': 'shop_api_user',
-        'PASSWORD': '1234', 
-        'HOST': 'localhost',
-        'PORT': '5432'
+        'NAME': os.environ.get('NAME_DB'),
+        'USER': os.environ.get('USER_DB'),
+        'PASSWORD': os.environ.get('PASSWORD_DB'), 
+        'HOST': os.environ.get('HOST_DB'),
+        'PORT': os.environ.get('PORT_DB')
     }
 }
 
